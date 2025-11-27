@@ -10,18 +10,16 @@ async function setup() {
   background(220);
 
   // Add a sample score
-  const { data: insertData, error: insertError } = await supabase
-    .from("scores")
-    .insert([{ name: "Alice", score: Math.floor(Math.random() * 100) }]);
+const { data: scores, error: fetchError } = await supabase.from("scores").select("*");
 
-  if (insertError) console.error("Insert error:", insertError);
-  else console.log("Inserted:", insertData);
-
-  // Fetch all scores
-  const { data: scores, error: fetchError } = await supabase.from("scores").select("*");
   if (fetchError) console.error("Fetch error:", fetchError);
-
-  displayScores(scores);
+  else {
+    if (scores.length === 0) {
+      await supabase.from("scores").insert([{ name: "Alice", score: 42 }]);
+      console.log("Inserted Alice");
+    }
+    displayScores(scores);
+  }
 }
 
 function displayScores(scores) {
