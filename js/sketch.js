@@ -8,16 +8,19 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 // Global variable to store scores
 let scoresData = [];
 
-async function testSupabase() {
+// Load scores from Supabase
+async function loadScores() {
   const { data, error } = await supabaseClient.from("scores").select("*");
   if (error) {
     console.error("Supabase error:", error);
   } else {
-    console.log("Fetched rows:", data);
+    scoresData = data;
+    console.log("Scores loaded:", scoresData);
   }
 }
 
-testSupabase();
+// Call loadScores once at startup
+loadScores();
 
 function setup() {
   const canvas = createCanvas(600, 300);
