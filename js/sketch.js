@@ -5,6 +5,9 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// Global variable to store scores
+let scoresData = [];
+
 async function testSupabase() {
   const { data, error } = await supabaseClient.from("scores").select("*");
   if (error) {
