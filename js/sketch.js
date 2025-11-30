@@ -1,6 +1,6 @@
 /* ===== sketch.js ===== */
 // Initialize Supabase
-const SUPABASE_URL = "https://mqleqkjgscpzkiyzbtxy.supabase.co"; // replace with your Supabase URL
+const SUPABASE_URL = "https://mqleqkjgscpzkiyzbtxy.supabase.co/auth/v1/callback"; // replace with your Supabase URL
 const SUPABASE_KEY =
   "2aa3071279491552f7f7318562473334ec11d7b7"; // replace with your anon key
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
