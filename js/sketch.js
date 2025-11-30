@@ -27,7 +27,7 @@ function setup() {
 async function loadMessage() {
   const { data, error } = await supabase
     .from("scores")   // your table
-    .select("text")     // the column
+    .select("name")     // the column
     .eq("id", 1)        // select specific row
     .single();
 
