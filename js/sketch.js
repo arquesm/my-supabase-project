@@ -5,6 +5,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+let scoresData = [];
 
 // p5.js sketch
 function setup() {
@@ -13,8 +14,23 @@ function setup() {
 
   textSize(16);
   text("p5.js is working!", 20, 50);
-
+  loadScores();
   loadDataFromSupabase();
+  
+  // Draw each score as a bar
+  for (let i = 0; i < scoresData.length; i++) {
+    const s = scoresData[i];
+    
+    // Draw the name
+    text(s.name, 20, 70 + i * 40);
+
+    // Draw a horizontal bar for the value
+    fill(100, 150, 250);
+    rect(150, 55 + i * 40, s.value * 5, 25);
+
+    fill(0);
+    text(s.value, 160 + s.value * 5, 75 + i * 40);
+  }
 }
 
 async function loadDataFromSupabase() {
@@ -35,4 +51,18 @@ async function loadDataFromSupabase() {
   }
 
   output.textContent = "First row: " + JSON.stringify(data[0]);
+}
+
+// Fetch all rows from the 'scores' table
+async function loadScores() {
+  const { data, error } = await supabase
+    .from("scores")
+    .select("*");  // select all columns
+
+  if (error) {
+    console.error("Supabase error:", error);
+    return;
+  }
+
+  scoresData = data;  // store fetched rows
 }
