@@ -37,6 +37,13 @@ function draw() {
   }
 }
 
+async function testSupabase() {
+  const { data, error } = await supabase.from("scores").select("*");
+  console.log("Test fetch:", { data, error });
+}
+testSupabase();
+
+
 // Fetch all rows from the 'scores' table
 async function loadScores() {
 
