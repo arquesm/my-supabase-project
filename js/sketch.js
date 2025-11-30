@@ -5,39 +5,50 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-/ A variable to store the message from the database
-let dbMessage = "Loading...";
+
+// Array to store all scores
+let scoresData = [];
 
 function setup() {
-  createCanvas(500, 300);
-  textSize(20);
+  createCanvas(600, 400);
+  textSize(18);
+  fill(0);
 
-  // Load data from Supabase
-  loadMessage();
+  // Load scores from Supabase
+  loadScores();
 }
 
 function draw() {
   background(220);
 
-  fill(0);
-  text("p5.js is working!", 20, 40);
+  text("Scores from Supabase:", 20, 30);
 
-  // Draw the message from the database
-  text("DB Message: " + dbMessage, 20, 100);
+  // Draw each score as a bar
+  for (let i = 0; i < scoresData.length; i++) {
+    const s = scoresData[i];
+    
+    // Draw the name
+    text(s.name, 20, 70 + i * 40);
+
+    // Draw a horizontal bar for the value
+    fill(100, 150, 250);
+    rect(150, 55 + i * 40, s.value * 5, 25);
+
+    fill(0);
+    text(s.value, 160 + s.value * 5, 75 + i * 40);
+  }
 }
 
-// Fetch 1 row from Supabase and update p5
-async function loadMessage() {
+// Fetch all rows from the 'scores' table
+async function loadScores() {
   const { data, error } = await supabase
-    .from("scores")   // your table
-    .select("text")     // the column
-    .eq("id", 1)        // select specific row
-    .single();
+    .from("scores")
+    .select("*");  // select all columns
 
   if (error) {
-    dbMessage = "Error: " + error.message;
+    console.error("Supabase error:", error);
     return;
   }
 
-  dbMessage = data.text;
+  scoresData = data;  // store fetched rows
 }
