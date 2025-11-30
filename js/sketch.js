@@ -20,7 +20,8 @@ async function testSupabase() {
 testSupabase();
 
 function setup() {
-  createCanvas(600, 300);
+  const canvas = createCanvas(600, 300);
+  canvas.parent('canvas-container');
   textSize(18);
 }
 
