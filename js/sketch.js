@@ -16,7 +16,13 @@ function setup() {
   text("p5.js is working!", 20, 50);
   loadScores();
   loadDataFromSupabase();
-  
+}
+
+function draw() {
+  background(220);
+
+  text("Scores from Supabase:", 20, 30);
+
   // Draw each score as a bar
   for (let i = 0; i < scoresData.length; i++) {
     const s = scoresData[i];
