@@ -5,21 +5,24 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// A variable to store the message from the database
+/ A variable to store the message from the database
 let dbMessage = "Loading...";
 
-// p5.js sketch
 function setup() {
-  createCanvas(400, 200);
+  createCanvas(500, 300);
+  textSize(20);
+
+  // Load data from Supabase
+  loadMessage();
+}
+
+function draw() {
   background(220);
 
-  textSize(16);
-  text("p5.js is working!", 20, 50);
+  fill(0);
+  text("p5.js is working!", 20, 40);
 
-// Load data from Supabase
-  loadMessage();
-  
-// Draw the message from the database
+  // Draw the message from the database
   text("DB Message: " + dbMessage, 20, 100);
 }
 
@@ -27,7 +30,7 @@ function setup() {
 async function loadMessage() {
   const { data, error } = await supabase
     .from("scores")   // your table
-    .select("name")     // the column
+    .select("text")     // the column
     .eq("id", 1)        // select specific row
     .single();
 
