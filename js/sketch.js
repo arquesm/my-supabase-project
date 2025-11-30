@@ -15,3 +15,34 @@ async function testSupabase() {
 }
 
 testSupabase();
+
+function setup() {
+  createCanvas(600, 300);
+  textSize(18);
+}
+
+function draw() {
+  background(220);
+
+  if (scoresData.length === 0) {
+    text("Loading scores...", 20, 50);
+    return;
+  }
+
+  text("Scores:", 20, 30);
+
+  for (let i = 0; i < scoresData.length; i++) {
+    const s = scoresData[i];
+
+    // Draw name
+    text(s.name, 20, 70 + i * 40);
+
+    // Draw a horizontal bar proportional to the score
+    fill(100, 150, 250);
+    rect(150, 55 + i * 40, s.score * 5, 25);
+
+    // Draw numeric score at the end
+    fill(0);
+    text(s.score, 160 + s.score * 5, 75 + i * 40);
+  }
+}
