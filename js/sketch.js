@@ -5,6 +5,9 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// A variable to store the message from the database
+let dbMessage = "Loading...";
+
 // p5.js sketch
 function setup() {
   createCanvas(400, 200);
@@ -13,25 +16,25 @@ function setup() {
   textSize(16);
   text("p5.js is working!", 20, 50);
 
-  loadDataFromSupabase();
+// Load data from Supabase
+  loadMessage();
+  
+// Draw the message from the database
+  text("DB Message: " + dbMessage, 20, 100);
 }
 
-async function loadDataFromSupabase() {
-  const output = document.getElementById("db-output");
-
+// Fetch 1 row from Supabase and update p5
+async function loadMessage() {
   const { data, error } = await supabase
-    .from("scores")       // 🔥 your table name
-    .select("*");
+    .from("scores")   // your table
+    .select("text")     // the column
+    .eq("id", 1)        // select specific row
+    .single();
 
   if (error) {
-    output.textContent = "Error: " + error.message;
+    dbMessage = "Error: " + error.message;
     return;
   }
 
-  if (!data || data.length === 0) {
-    output.textContent = "No data found.";
-    return;
-  }
-
-  output.textContent = "First row: " + JSON.stringify(data[0]);
+  dbMessage = data.text;
 }
