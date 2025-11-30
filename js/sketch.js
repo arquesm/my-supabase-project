@@ -10,5 +10,6 @@ async function testSupabase() {
   console.log("Fetched rows:", data);
   console.log("Supabase error:", error);
 }
+console.log("Hello from sketch.js!");
 
 testSupabase();
