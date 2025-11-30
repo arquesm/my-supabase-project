@@ -16,10 +16,7 @@ async function loadScores() {
     console.log("Scores loaded:", scoresData);
   }
 }
-
 loadScores();
-
-console.log("Scores loaded:", scoresData);
 
 async function testSupabase() {
   const { data, error } = await supabase.from("scores").select("*");
