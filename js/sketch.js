@@ -39,6 +39,14 @@ function draw() {
 
 // Fetch all rows from the 'scores' table
 async function loadScores() {
+
+  if (error) {
+  console.error("Supabase error:", error);
+} else {
+  console.log("Fetched rows:", data);
+}
+
+  
   const { data, error } = await supabase
     .from("scores")
     .select("*");  // select all columns
