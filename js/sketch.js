@@ -5,19 +5,6 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 // Initialize supabase client
 const supabaseClient = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-let scoresData = []; // store fetched rows
-
-async function loadScores() {
-  const { data, error } = await supabaseClient.from("scores").select("*");
-  if (error) {
-    console.error("Supabase error:", error);
-  } else {
-    scoresData = data;
-    console.log("Scores loaded:", scoresData);
-  }
-}
-loadScores();
-
 async function testSupabase() {
   const { data, error } = await supabaseClient.from("scores").select("*");
   if (error) {
