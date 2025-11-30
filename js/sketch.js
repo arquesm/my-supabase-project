@@ -22,7 +22,7 @@ async function loadDataFromSupabase() {
 
   const { data, error } = await supabase
     .from("scores")       // 🔥 your table name
-    .select("text");
+    .select("name");
 
   if (error) {
     output.textContent = "Error: " + error.message;
